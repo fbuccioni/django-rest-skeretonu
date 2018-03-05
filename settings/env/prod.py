@@ -15,3 +15,8 @@ DATABASES = {
         # 'HOST': '',
     }
 }
+
+# Static file hash
+STATICFILES_STORAGE = (
+    "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+)
