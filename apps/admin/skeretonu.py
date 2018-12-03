@@ -1,5 +1,5 @@
 """
-django-skeretonu: App admin example, this file must have the name of the app
+django-skeretonu.rst: App admin example, this file must have the name of the app
 """
 from django.contrib import admin
 from django.utils.safestring import mark_safe

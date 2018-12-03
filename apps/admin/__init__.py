@@ -1,5 +1,5 @@
 """
-django-skeretonu admin file example.
+django-skeretonu.rst admin file example.
 """
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
