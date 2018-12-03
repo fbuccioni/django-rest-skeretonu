@@ -1,4 +1,4 @@
-from ..main import *
+from .dev import *
 
 # Local development configuration
 
