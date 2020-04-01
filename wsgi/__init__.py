@@ -1,5 +1,5 @@
 """
-WSGI config for django_skeretonu project.
+WSGI config for whole project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -8,9 +8,15 @@ https://docs.djangoproject.com/en/2.0/howto/deployment/wsgi/
 """
 
 import os
+import sys
 
 from django.core.wsgi import get_wsgi_application
+from dotenv import load_dotenv
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.env.default")
+
+if os.path.exists(os.path.join(os.path.dirname(__file__), "..", ".env")):
+    sys.stderr.write("Using .env file\n")
+    load_dotenv(verbose=True)
 
 application = get_wsgi_application()
