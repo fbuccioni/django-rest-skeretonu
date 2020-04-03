@@ -20,6 +20,26 @@ Additionally I use the folder `/automation` for `requierements.txt` and
 some other automation stuff like ssh keys, `fabfile.py` scripts, other
 scripts, etc.
 
+How can configure this
+-----------------------
+
+There are 4 ways to configure:
+
+1. By default uses `settings.env.default` module, the example of 
+   `settings/env/default.py` is a simpy symlink to `local.py` (in the same
+   directory)
+2. The common use of `DJANGO_SETTINGS_MODULE` environment variable pointing 
+   to your environment, an example can be `settings.env.prod 
+3. Dotenv, the `manage.py` and the `wsgi/__init__.py` (the wsgi application
+   in `wsgi` module) also read the `.env` file in the root
+4. Environment Variables using `os.getenv`
+
+In my personal experience, I use a module for the static configuration for
+different environments and `os.getenv` for environment variables and depending
+on the envoironment use raw environment variables, for example in a docker
+container or `.env` if it's a deploy with `Fabric/fake`
+
+
 What is the `httpserver.py` file?
 -----------------------------
 
