@@ -5,6 +5,16 @@ django-skeretonu
 A skeleton for django framework.
 
 
+Create a project with `django-skeretonu`
+---------------------------------------
+
+Please rename `project-name` with your project folder name
+
+```
+curl -sL https://github.com/fbuccioni/django-skeretonu/tarball/master | tar -zxvf -; mv -v fbuccioni-django-skeretonu-[0-9]*[0-9] project-name
+```
+
+
 Why all those dirs at the root?
 -------------------------------
 
@@ -40,36 +50,8 @@ on the envoironment use raw environment variables, for example in a docker
 container or `.env` if it's a deploy with `Fabric/fake`
 
 
-What is the `httpserver.py` file?
------------------------------
-
-The `httpserver.py` is a python script to run a 
-[Tornado](http://www.tornadoweb.org) web server serving our Django project.
-
-_**Note**_: If your project use static files, this script use static from 
-`/static` folder, so you must run the  `collectstatic` django command 
-before run this command.
-
-_**Note**_: You must install the tornado python package before use this
-script, this can be done via `pip` using the following command:
-
-```
-pip install tornado
-```
-
-
-### Usage:
-
-```
-python httpserver.py 9000
-```
-
-And the web server will be running in the port `9000`, the default host is
-`0.0.0.0` binding the service to all ips. you can specify a host with `127.0.0.1:9000` argument.
-
-
-`fabfile.py` Template
-----------------------
+`fabfile.py` Template for development and server tasks
+------------------------------------------------------
 
 The skeleton uses a Fabric template, but you need fake to use it, try to install globally
 and not inside your virtualenv.
@@ -114,6 +96,34 @@ Fake provides a deploy capistrano-like tasks, check out the [Fabric GitHub](http
 7. Test it with `fab -R env deploy`
 8. Check if errors
 9. `goto 7 until works`
+
+
+What is the `httpserver.py` file?
+-----------------------------
+
+The `httpserver.py` is a python script to run a 
+[Tornado](http://www.tornadoweb.org) web server serving our Django project.
+
+_**Note**_: If your project use static files, this script use static from 
+`/static` folder, so you must run the  `collectstatic` django command 
+before run this command.
+
+_**Note**_: You must install the tornado python package before use this
+script, this can be done via `pip` using the following command:
+
+```
+pip install tornado
+```
+
+
+### Usage:
+
+```
+python httpserver.py 9000
+```
+
+And the web server will be running in the port `9000`, the default host is
+`0.0.0.0` binding the service to all ips. you can specify a host with `127.0.0.1:9000` argument.
 
 
 Suggestions?
