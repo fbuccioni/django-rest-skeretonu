@@ -34,3 +34,7 @@ __pycache__
 /docs/linkcheck
 /docs/xml
 /docs/pseudoxml
+
+
+# dotenv
+/.env*

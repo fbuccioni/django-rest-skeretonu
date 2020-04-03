@@ -6,7 +6,11 @@ from dotenv import load_dotenv
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.env.default")
 
-    if os.path.exists(os.path.join(os.path.dirname(__file__), ".env")):
+    if (
+        not os.getenv("DJANGO_DOTENV_LOADED", None) and
+        os.path.exists(os.path.join(os.path.dirname(__file__), ".env"))
+    ):
+        os.environ["DJANGO_DOTENV_LOADED"] = "yes"
         sys.stderr.write("Using .env file\n")
         load_dotenv(verbose=True)
 
