@@ -5,6 +5,7 @@ from fake.api import (
     env, paths, cd, put, after
 )
 from fake.tasks.deploy import *
+from urllib.parse import urlparse
 
 
 #import paramiko
@@ -18,7 +19,7 @@ class FabricException(Exception):
 current_path = os.path.dirname(__file__)
 name = 'skeretonu'
 
-if 'local'  in env.roles:
+if 'local' in env.roles:
     run = lrun
 else:
     run = rrun
@@ -30,7 +31,7 @@ env.roledefs = {
         'service_user': 'www-data',
         'branch': 'master',
         'repo_url': 'git+ssh://git@github.com/fbuccioni/{0}'.format(name),
-        'key_filename': current_path + '/automation/ssh.key',
+        'key_filename': current_path + '/automation/keys/deploy.key',
         'deploy_path': '/hosting/app/{0}'.format(name),
         'use_ssh_config': True,
         'settings_module': 'aws'
@@ -41,7 +42,7 @@ env.roledefs = {
         'service_user': 'www-data',
         'branch': 'v2',
         'repo_url': 'git+ssh://git@github.com/fbuccioni/{0}'.format(name),
-        'key_filename': current_path + '/automation/ssh.key',
+        'key_filename': current_path + '/automation/keys/deploy.key',
         'deploy_path': '/hosting/app/{0}-dev'.format(name),
         'use_ssh_config': True,
         'settings_module': 'dev'
@@ -88,43 +89,61 @@ def install_ssh_key():
 @task
 def install_git_ssh():
     """
-        Installs ssh kit for git (automation/ssh.key)
+        Installs ssh kit for git (automation/keys/deploy.key)
     """
     abort_msg = None
+    git_key_name = "git.{0}.key".format(name)
 
     utils.puts("Checking previous installation...")
     with settings(abort_exception=FabricException):
         try:
-            run('[ ! -f ~/.ssh/git.dev.key ]')
-        except(FabricException):
-            abort_msg = "git.dev.key already exists"
+            run('[ ! -f ~/.ssh/{0} ]'.format(git_key_name))
+        except FabricException:
+            abort_msg = "{0} already exists".format(git_key_name)
 
     if abort_msg:
         utils.abort(abort_msg)
     
     utils.puts("Copying key...")
-    put(current_path + '/automation/ssh.key', '~/.ssh/git.dev.key')
+    put(
+        current_path + '/automation/keys/deploy.key',
+        '~/.ssh/' + git_key_name
+    )
     
     with open(current_path + '/automation/ssh.git.conf', 'r') as ssh_conf_fp:
         ssh_git_conf = ssh_conf_fp.read()
         ssh_conf_fp.close()
 
+    git_parsed_url = urlparse(env.repo_url).hostname
+    git_username = git_parsed_url.username or 'git'
+
+    if not git_parsed_url.username:
+        utils.puts("Not user present in git URL, using `git` as default")
+
     utils.puts("Adding conf to user ssh config file...")
     run("echo \"{0}\" >> ~/.ssh/config ".format(
-        ssh_git_conf.replace('"', '\\\\"')
+        ssh_git_conf\
+            .format(
+                user=git_username,
+                host=git_parsed_url.hostname,
+                key_name=git_key_name
+            )\
+            .replace('"', '\\\\"')
     ))
 
     utils.puts("Enforce permissions for user ssh config file and key...")
     run("chmod 600 ~/.ssh/config")
-    run("chmod 600 ~/.ssh/git.dev.key")
+    run("chmod 600 ~/.ssh/" + git_key_name)
 
-    utils.puts("Adding github.com to known_hosts")
+    utils.puts("Adding {0} to known_hosts".format(git_parsed_url.hostname))
     run(
-        "(host=github.com; ssh-keyscan -H $host; " +
-        "for ip in $(dig github.com +short); do " +
-        "ssh-keyscan -H $host,$ip; " +
-        "ssh-keyscan -H $ip; " +
-        "done) 2> /dev/null >> ~/.ssh/known_hosts"
+        (
+            "(host={0}; ssh-keyscan -H $host; "
+            "for ip in $(dig {0} +short); do "
+            "ssh-keyscan -H $host,$ip; "
+            "ssh-keyscan -H $ip; "
+            "done) 2> /dev/null >> ~/.ssh/known_hosts"
+        ).format(git_parsed_url.hostname)
     )
 
 
@@ -250,7 +269,7 @@ def deploy_virtualenv():
     run(
         (
             "source {0}/virtualenv/bin/activate && " +
-            "pip install -r {0}/current/automation/requirements.txt"
+            "pip install -r {0}/current/requirements.txt"
         ).format(env.deploy_path)
     )
 
