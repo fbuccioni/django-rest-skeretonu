@@ -2,7 +2,18 @@ django-skeretonu
 =================
 
 
-A skeleton for django framework.
+A skeleton for django framework with the following features:
+
+- Separated admin from apps  `apps/admin`
+- Separated config to use with different environments, main file and 
+  extended config files
+- Environment variables based config, including databases as URLs 
+  with `dj_database_url`
+- Reads environment from `.env` file (dotenv)
+- Fabric deploy via `fake` and some additional ssh manage tasks
+- Docker app container via  `Dockerfile` with `nginx` and `uwsgi`
+- Tornado web server alternative for production environments
+- Document generation via `Sphinx` schema
 
 
 Create a project with `django-skeretonu`
@@ -63,8 +74,8 @@ pip install fake
 
 Fake provides a deploy capistrano-like tasks, check out the [Fabric GitHub](https://github.com/bmuller/fake) and additionally have the following commands
 
-| Task                | Description
-|---------------------|-------------------------------------------------------------
+| Task                  | Description
+|-----------------------|-------------------------------------------------------------
 | `cleanup_rollback`    |  Remove and archive rolled-back release.
 | `copy_envfile`        |  Copy dotenv file arg to the main app directory as dotenv
 | `create_run_dir`      |  Create a `run` directory inside the project root for the socket and pid files
@@ -99,7 +110,7 @@ Fake provides a deploy capistrano-like tasks, check out the [Fabric GitHub](http
 
 
 What is the `httpserver.py` file?
------------------------------
+---------------------------------
 
 The `httpserver.py` is a python script to run a 
 [Tornado](http://www.tornadoweb.org) web server serving our Django project.
