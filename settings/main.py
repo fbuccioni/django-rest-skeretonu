@@ -15,7 +15,7 @@ import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+CUSTOM_ADMIN_PATH = os.path.realpath(BASE_DIR, 'apps', 'admin')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'apps.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(CUSTOM_ADMIN_PATH, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,6 +111,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR + '/static'
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+)
+
+STATICFILES_DIRS = (
+    os.path.join(CUSTOM_ADMIN_PATH, 'static'),
+)
 
 # Database using dotenv schema
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
