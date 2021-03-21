@@ -23,7 +23,7 @@ Create a project with `django-skeretonu`
 Please rename `project-name` with your project folder name
 
 ```
-curl -sL https://github.com/fbuccioni/django-skeretonu/tarball/master | tar -zxvf -; mv -v fbuccioni-django-skeretonu-[0-9]*[0-9] project-name
+curl -sL https://github.com/fbuccioni/django-skeretonu/tarball/master | tar -zxvf -; mv -v fbuccioni-django-skeretonu-[0-9a-f]*[0-9a-f] project-name
 ```
 
 
