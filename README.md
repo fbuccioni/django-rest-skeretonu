@@ -7,6 +7,7 @@ A skeleton for django framework with the following features:
 - Separated admin from apps  `apps/admin`
 - Separated config to use with different environments, main file and 
   extended config files
+- Themed admin with `django-jet`
 - Environment variables based config, including databases as URLs 
   with `dj_database_url`
 - Reads environment from `.env` file (dotenv)

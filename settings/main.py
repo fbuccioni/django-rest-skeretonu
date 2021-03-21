@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
 INSTALLED_APPS = [
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -86,6 +86,8 @@ SWAGGER_SETTINGS = {
 }
 
 SILENCED_SYSTEM_CHECKS = ["rest_framework.W001"]
+
+JET_DEFAULT_THEME = 'skeretonu'
 
 TEMPLATES = [
     {
