@@ -15,13 +15,14 @@ import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CUSTOM_ADMIN_PATH = os.path.realpath(BASE_DIR, 'apps', 'admin')
+CUSTOM_ADMIN_PATH = os.path.join(BASE_DIR, 'apps', 'admin')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Make your own secret
+# Make your own secret.
+# You can create one in https://www.lastpass.com/es/password-generator
 SECRET_KEY = 'CHANGE ME!!!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
