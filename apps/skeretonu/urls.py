@@ -28,7 +28,7 @@ from .rest import routers
 
 schema_view = get_schema_view(
    openapi.Info(
-      title=gettext("SERNATUR COVID19 traceability API"),
+      title=gettext("django-rest-skeretonu API"),
       default_version='1.0.0',
       description=gettext("For mobile and web app."),
       #terms_of_service="https://www.google.com/policies/terms/",
