@@ -1,5 +1,5 @@
-django-skeretonu
-=================
+django-rest-skeretonu
+=====================
 
 
 A skeleton for django framework with the following features:
@@ -17,8 +17,8 @@ A skeleton for django framework with the following features:
 - Document generation via `Sphinx` schema
 
 
-Create a project with `django-skeretonu`
----------------------------------------
+Create a project with `django-rest-skeretonu`
+---------------------------------------------
 
 Please rename `project-name` with your project folder name
 

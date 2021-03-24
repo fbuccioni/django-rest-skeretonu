@@ -1,6 +1,4 @@
 ARG FROM_TAG=latest
-#FROM registry.gitlab.com/viralcreation/retargeting-images/rt-python3:${FROM_TAG}
-#FROM python:alpine
 FROM python:3.8-alpine
 
 
