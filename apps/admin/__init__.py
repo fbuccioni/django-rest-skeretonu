@@ -3,7 +3,9 @@ django-skeretonu.rst admin file example.
 """
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _t
-# from . import skeretonu
+
+from . import skeretonu
+from ..skeretonu import models
 
 
 class AdminSite(admin.sites.AdminSite):
@@ -27,7 +29,8 @@ site = AdminSite()
 #    skeretonu.models.Skeretonu, skeretonu.SkeretonuAdmin
 #)
 
-for admin_module in []:#(skeretonu,):
+
+for admin_module in (skeretonu,):
     for item in dir(admin_module):
         if hasattr(item, 'ignore_auto'):
             continue
