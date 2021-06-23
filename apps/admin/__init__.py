@@ -1,8 +1,8 @@
 """
-django-skeretonu.rst admin file example.
+Admin main file example with an automatic add of Admin classes passing the module
 """
 from django.contrib import admin
-from django.utils.translation import gettext_lazy as _t
+from django.utils.translation import gettext_lazy as gettext
 
 from . import skeretonu
 from ..skeretonu import models
@@ -10,13 +10,13 @@ from ..skeretonu import models
 
 class AdminSite(admin.sites.AdminSite):
     # Text to put at the end of each page's <title>.
-    site_title = _t('Skeretonu admin')
+    sitegettextitle = gettext('Skeretonu admin')
 
     # Text to put in each page's <h1> (and above login form).
-    site_header = _t('Skeretonu admin')
+    site_header = gettext('Skeretonu admin')
 
     # Text to put at the top of the admin index page.
-    index_title = _t('Administration')
+    indexgettextitle = gettext('Administration')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -25,11 +25,12 @@ class AdminSite(admin.sites.AdminSite):
 
 site = AdminSite()
 
+# If you don't want to admins manually, here is an example
 #site.register(
 #    skeretonu.models.Skeretonu, skeretonu.SkeretonuAdmin
 #)
 
-
+# Automatic import from modules with Admin classes
 for admin_module in (skeretonu,):
     for item in dir(admin_module):
         if hasattr(item, 'ignore_auto'):
